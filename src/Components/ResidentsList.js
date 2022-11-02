@@ -20,32 +20,34 @@ function checkValidity(joiningDate, validityDate) {
 function ResidentsList() {
 
 	const [residentList, setResidentList] = useState([]);
-	const [errorMessage, setErrorMessage] = useState([]);
+	const [errorMessage, setErrorMessage] = useState("");
 
     const addResident = resident =>{
         if(!resident.studentName || /^\s*$/.test(resident.studentName)){
             return;
         }
 
-		for(let index = 0; index < STUDENTS.length; index++){
-			if(resident.studentName.toLowerCase() === STUDENTS[index].name.toLowerCase()){
-				if(checkValidity(resident.joiningDate, STUDENTS[index].validityDate) === false ){
-					setErrorMessage('Sorry, '+resident.studentName+'`s Validity has expired')
-					break;
+			let studentIndex;
+			let stdValidy = [];
+			
+			for(let index = 0; index < STUDENTS.length; index++){	
+				if(resident.studentName.toLowerCase() === STUDENTS[index].name.toLowerCase()){
+					studentIndex = index;
+					stdValidy = [STUDENTS[index].validityDate, resident.joiningDate];				
 				}
-				else{
-					const newResidents = [resident, ...residentList];
-					setResidentList(newResidents);
-				}
-			}
-			else{
+			};
+			if(studentIndex === undefined){
 				setErrorMessage('Sorry '+resident.studentName +' is not a verified Student')
 			}
-			console.log(STUDENTS[index]);
-			console.log(checkValidity(resident.joiningDate, STUDENTS[index].validityDate));
+			else if(resident.studentName.toLowerCase() === STUDENTS[studentIndex].name.toLowerCase() && checkValidity(stdValidy[0], stdValidy[1]) === false){
+				const newResidents = [resident, ...residentList];
+				setResidentList(newResidents);
+			}
+
+		else{
+			setErrorMessage('Sorry, '+resident.studentName+'`s Validity has expired')
 		}
-		
-    };
+	}
 
     const completeResident = id =>{
         let updatedResidentList = residentList.map(resident => {
@@ -60,7 +62,8 @@ function ResidentsList() {
 	return (
 		<div className="pa-10 mt-10 w-75">
 			<Search onSubmit = {addResident}/>
-			<Error errorMessage = {errorMessage} />
+			
+			<Error  errorMessage = {errorMessage} />
 			<div className="font-weight-bold text-center">Residents List</div>
 			<Resident residentList={residentList} completeResident = {completeResident}/>
 		</div>
