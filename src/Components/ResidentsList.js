@@ -36,7 +36,7 @@ function ResidentsList() {
 					stdValidy = [STUDENTS[index].validityDate, resident.joiningDate];				
 				}
 			};
-			if(studentIndex === undefined){
+			if(studentIndex === ""){
 				setErrorMessage('Sorry '+resident.studentName +' is not a verified Student')
 			}
 			else if(resident.studentName.toLowerCase() === STUDENTS[studentIndex].name.toLowerCase() && checkValidity(stdValidy[0], stdValidy[1]) === false){

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { STUDENTS } from '../studentsList';
 
 function Search(props) {
 
@@ -24,12 +23,12 @@ function Search(props) {
 			<div className="my-50 layout-row align-items-end justify-content-end">
 				<label htmlFor="studentName">Student Name:
 					<div>
-						<input id="studentName" data-testid="studentName" type="text" className="mr-30 mt-10" name = 'studentName' value = {studentName} onChange={event => setStudentName(event.target.value)} />
+						<input id="studentName" data-testid="studentName" type="text" className="mr-30 mt-10" name = 'studentName' value = {studentName} onChange={event => setStudentName(event.target.value)} required />
 					</div>
 				</label>
 				<label htmlFor="joiningDate">Joining Date:
 					<div>
-						<input id="joiningDate" data-testid="joiningDate" type="date" className="mr-30 mt-10" name = 'joiningDate' value= {joiningDate} onChange={event => setJoiningDate(event.target.value)} />
+						<input id="joiningDate" data-testid="joiningDate" type="date" className="mr-30 mt-10" name = 'joiningDate' value= {joiningDate} onChange={event => setJoiningDate(event.target.value)} required />
 					</div>
 				</label>
 				<button data-testid="addBtn" className="small mb-0">Add</button>
